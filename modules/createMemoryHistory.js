@@ -16,6 +16,7 @@ const createMemoryHistory = (props = {}) => {
     initialIndex = 0,
     keyLength = 6
   } = props
+  const basename = props.basename ? stripTrailingSlash(addLeadingSlash(props.basename)) : ''
 
   const transitionManager = createTransitionManager()
 
@@ -42,7 +43,8 @@ const createMemoryHistory = (props = {}) => {
 
   // Public interface
 
-  const createHref = createPath
+  const createHref = (location) =>
+    basename + createPath(location)
 
   const push = (path, state) => {
     warning(
